@@ -4,9 +4,9 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
 export const metadata = {
-  title: "Country Explorer — Live REST Countries data",
+  title: "Country Explorer",
   description:
-    "Search and filter every country in the world using live data from the REST Countries API.",
+    "Search and filter every country in the world using live data from a public countries API.",
 };
 
 export default function RootLayout({ children }) {
