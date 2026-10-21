@@ -14,12 +14,12 @@ export default function Header() {
               Country Explorer
             </h1>
             <p className="text-xs text-slate-500 sm:text-sm">
-              Live data from the REST Countries API
+              Live data from the Countries GraphQL API
             </p>
           </div>
         </div>
         <a
-          href="https://restcountries.com"
+          href="https://github.com/trevorblades/countries"
           target="_blank"
           rel="noreferrer"
           className="hidden rounded-lg border border-slate-200 px-3 py-2 text-sm font-medium text-slate-600 transition hover:border-brand-500 hover:text-brand-600 sm:inline-block"

@@ -9,7 +9,7 @@ export default function EmptyState({ query, region, onReset }) {
         Nothing matches
         {query ? <> &ldquo;<strong className="text-slate-700">{query}</strong>&rdquo;</> : null}
         {region !== "All" ? <> in <strong className="text-slate-700">{region}</strong></> : null}.
-        Try a different search or region.
+        Try a different search or continent.
       </p>
       <button
         type="button"

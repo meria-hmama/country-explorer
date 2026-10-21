@@ -1,10 +1,18 @@
-const REGIONS = ["All", "Africa", "Americas", "Asia", "Europe", "Oceania", "Antarctic"];
+const REGIONS = [
+  "All",
+  "Africa",
+  "Antarctica",
+  "Asia",
+  "Europe",
+  "North America",
+  "Oceania",
+  "South America",
+];
 
 const SORTS = [
   { value: "name-asc", label: "Name (A–Z)" },
   { value: "name-desc", label: "Name (Z–A)" },
-  { value: "pop-desc", label: "Population (high → low)" },
-  { value: "pop-asc", label: "Population (low → high)" },
+  { value: "lang-desc", label: "Most languages" },
 ];
 
 const fieldClass =
@@ -32,16 +40,16 @@ export default function Toolbar({ query, onQuery, region, onRegion, sort, onSort
       </label>
 
       <label className="block">
-        <span className="sr-only">Filter by region</span>
+        <span className="sr-only">Filter by continent</span>
         <select
           value={region}
           onChange={(e) => onRegion(e.target.value)}
           disabled={disabled}
-          className={`${fieldClass} sm:w-44`}
+          className={`${fieldClass} sm:w-48`}
         >
           {REGIONS.map((r) => (
             <option key={r} value={r}>
-              {r === "All" ? "All regions" : r}
+              {r === "All" ? "All continents" : r}
             </option>
           ))}
         </select>
@@ -53,7 +61,7 @@ export default function Toolbar({ query, onQuery, region, onRegion, sort, onSort
           value={sort}
           onChange={(e) => onSort(e.target.value)}
           disabled={disabled}
-          className={`${fieldClass} sm:w-56`}
+          className={`${fieldClass} sm:w-48`}
         >
           {SORTS.map((s) => (
             <option key={s.value} value={s.value}>

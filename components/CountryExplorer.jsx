@@ -12,8 +12,7 @@ import EmptyState from "./EmptyState";
 const sorters = {
   "name-asc": (a, b) => a.name.localeCompare(b.name),
   "name-desc": (a, b) => b.name.localeCompare(a.name),
-  "pop-desc": (a, b) => b.population - a.population,
-  "pop-asc": (a, b) => a.population - b.population,
+  "lang-desc": (a, b) => b.languages.length - a.languages.length || a.name.localeCompare(b.name),
 };
 
 export default function CountryExplorer() {
@@ -25,13 +24,14 @@ export default function CountryExplorer() {
 
   const results = useMemo(() => {
     return data
-      .filter((c) => region === "All" || c.region === region)
+      .filter((c) => region === "All" || c.continent === region)
       .filter(
         (c) =>
           !debouncedQuery ||
           c.name.toLowerCase().includes(debouncedQuery) ||
-          c.officialName.toLowerCase().includes(debouncedQuery) ||
-          c.capital.toLowerCase().includes(debouncedQuery)
+          c.nativeName.toLowerCase().includes(debouncedQuery) ||
+          c.capital.toLowerCase().includes(debouncedQuery) ||
+          c.id.toLowerCase() === debouncedQuery
       )
       .sort(sorters[sort]);
   }, [data, region, debouncedQuery, sort]);
