@@ -4,15 +4,7 @@ import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 import { fetchCountries } from "@/lib/countriesApi";
 
-// One store for the whole app, split into three "slices":
-//   countries -> the API data and its loading/error status
-//   filters   -> search text, continent, sort order, favourites-only toggle
-//   favorites -> ids of starred countries (saved in localStorage)
-//
-// Components read only the pieces they need with a selector, e.g.
-//   const region = useExplorerStore((s) => s.region);
-// so they re-render only when that piece changes, and nothing has to be
-// passed down through props any more.
+// whole app state in one place: countries, filters, favourites
 
 const DEFAULT_FILTERS = {
   query: "",
@@ -81,8 +73,7 @@ export const useExplorerStore = create(
       storage: createJSONStorage(() => localStorage),
       // don't save the API data, just what the user chose
       partialize: (s) => ({ favorites: s.favorites, sort: s.sort }),
-      // the server can't see localStorage, so we load it after the first
-      // render (see StoreHydration) to avoid a hydration mismatch
+      // loaded in StoreHydration instead, otherwise next complains about hydration
       skipHydration: true,
     }
   )
