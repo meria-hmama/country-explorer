@@ -1,4 +1,11 @@
-export default function ErrorState({ message, onRetry }) {
+"use client";
+
+import { useExplorerStore } from "@/store/useExplorerStore";
+
+export default function ErrorState() {
+  const message = useExplorerStore((s) => s.error);
+  const loadCountries = useExplorerStore((s) => s.loadCountries);
+
   return (
     <div
       role="alert"
@@ -11,7 +18,7 @@ export default function ErrorState({ message, onRetry }) {
       <p className="mt-2 text-sm text-red-700">{message}</p>
       <button
         type="button"
-        onClick={onRetry}
+        onClick={() => loadCountries()}
         className="mt-6 rounded-xl bg-red-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-red-700 focus:outline-none focus:ring-4 focus:ring-red-200"
       >
         Try again

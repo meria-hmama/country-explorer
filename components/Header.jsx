@@ -1,4 +1,15 @@
+"use client";
+
+import { useExplorerStore } from "@/store/useExplorerStore";
+
+// The header sits outside <CountryExplorer>, so before this refactor it had no
+// way to know about favourites without lifting state up to the page.
+// With the store it just subscribes to what it needs.
 export default function Header() {
+  const favCount = useExplorerStore((s) => s.favorites.length);
+  const favoritesOnly = useExplorerStore((s) => s.favoritesOnly);
+  const setFavoritesOnly = useExplorerStore((s) => s.setFavoritesOnly);
+
   return (
     <header className="border-b border-slate-200 bg-white">
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-5 sm:px-6">
@@ -18,14 +29,32 @@ export default function Header() {
             </p>
           </div>
         </div>
-        <a
-          href="https://github.com/trevorblades/countries"
-          target="_blank"
-          rel="noreferrer"
-          className="hidden rounded-lg border border-slate-200 px-3 py-2 text-sm font-medium text-slate-600 transition hover:border-brand-500 hover:text-brand-600 sm:inline-block"
-        >
-          API docs ↗
-        </a>
+        <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={() => setFavoritesOnly(!favoritesOnly)}
+            aria-pressed={favoritesOnly}
+            className={`inline-flex items-center gap-2 rounded-lg border px-3 py-2 text-sm font-medium transition ${
+              favoritesOnly
+                ? "border-amber-400 bg-amber-50 text-amber-700"
+                : "border-slate-200 text-slate-600 hover:border-amber-400 hover:text-amber-700"
+            }`}
+          >
+            <span aria-hidden="true">★</span>
+            <span className="hidden sm:inline">Favourites</span>
+            <span className="rounded-full bg-slate-100 px-2 py-0.5 text-xs font-semibold text-slate-700">
+              {favCount}
+            </span>
+          </button>
+          <a
+            href="https://github.com/trevorblades/countries"
+            target="_blank"
+            rel="noreferrer"
+            className="hidden rounded-lg border border-slate-200 px-3 py-2 text-sm font-medium text-slate-600 transition hover:border-brand-500 hover:text-brand-600 md:inline-block"
+          >
+            API docs ↗
+          </a>
+        </div>
       </div>
     </header>
   );
