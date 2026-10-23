@@ -18,7 +18,6 @@ function Shell({ icon, title, children, action }) {
 const buttonClass =
   "mt-6 rounded-xl border border-slate-200 px-5 py-2.5 text-sm font-semibold text-slate-700 transition hover:border-brand-500 hover:text-brand-600";
 
-// Picks the right "nothing to show" message for the current situation.
 export default function EmptyState() {
   const total = useExplorerStore((s) => s.countries.length);
   const query = useExplorerStore((s) => s.query.trim());

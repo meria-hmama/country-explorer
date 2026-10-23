@@ -10,8 +10,6 @@ import SkeletonGrid from "./SkeletonGrid";
 import ErrorState from "./ErrorState";
 import EmptyState from "./EmptyState";
 
-// Before: this component owned all the state and passed ~10 props down.
-// Now: it just decides which view to show; the children read the store themselves.
 export default function CountryExplorer() {
   const status = useExplorerStore((s) => s.status);
   const ensureCountries = useExplorerStore((s) => s.ensureCountries);

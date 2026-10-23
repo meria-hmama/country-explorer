@@ -2,9 +2,6 @@
 
 import { useExplorerStore } from "@/store/useExplorerStore";
 
-// The header sits outside <CountryExplorer>, so before this refactor it had no
-// way to know about favourites without lifting state up to the page.
-// With the store it just subscribes to what it needs.
 export default function Header() {
   const favCount = useExplorerStore((s) => s.favorites.length);
   const favoritesOnly = useExplorerStore((s) => s.favoritesOnly);

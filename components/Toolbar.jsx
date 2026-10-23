@@ -22,7 +22,6 @@ const SORTS = [
 const fieldClass =
   "w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-800 shadow-sm outline-none transition focus:border-brand-500 focus:ring-4 focus:ring-brand-100 disabled:cursor-not-allowed disabled:opacity-60";
 
-// No props: reads and updates the filters straight from the store.
 export default function Toolbar() {
   const query = useExplorerStore((s) => s.query);
   const region = useExplorerStore((s) => s.region);
