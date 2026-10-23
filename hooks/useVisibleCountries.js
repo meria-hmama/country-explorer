@@ -11,8 +11,7 @@ const sorters = {
   "lang-desc": (a, b) => b.languages.length - a.languages.length || a.name.localeCompare(b.name),
 };
 
-// Derived data: the list after search, continent, favourites and sort are applied.
-// Any component can call this without needing the list passed in as a prop.
+// the list after search, continent, favourites and sort
 export function useVisibleCountries() {
   const { countries, query, region, sort, favoritesOnly, favorites } = useExplorerStore(
     useShallow((s) => ({
