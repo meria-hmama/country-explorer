@@ -1,9 +1,11 @@
 import Header from "@/components/Header";
 import CountryExplorer from "@/components/CountryExplorer";
+import StoreHydration from "@/components/StoreHydration";
 
 export default function Home() {
   return (
     <>
+      <StoreHydration />
       <Header />
       <main>
         <CountryExplorer />
