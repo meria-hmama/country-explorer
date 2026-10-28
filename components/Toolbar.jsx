@@ -20,7 +20,7 @@ const SORTS = [
 ];
 
 const fieldClass =
-  "w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-800 shadow-sm outline-none transition focus:border-brand-500 focus:ring-4 focus:ring-brand-100 disabled:cursor-not-allowed disabled:opacity-60";
+  "w-full rounded-full border border-brand-200 bg-white px-4 py-3 text-sm text-slate-800 shadow-sm outline-none transition focus:border-brand-500 focus:ring-4 focus:ring-brand-100 disabled:cursor-not-allowed disabled:opacity-60";
 
 export default function Toolbar() {
   const query = useExplorerStore((s) => s.query);
@@ -36,7 +36,7 @@ export default function Toolbar() {
         <span className="sr-only">Search countries</span>
         <span
           aria-hidden="true"
-          className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-slate-500"
+          className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-slate-600"
         >
           🔍
         </span>
@@ -87,13 +87,13 @@ export default function Toolbar() {
         aria-pressed={favoritesOnly}
         onClick={() => setFavoritesOnly(!favoritesOnly)}
         disabled={disabled}
-        className={`rounded-xl border px-4 py-3 text-sm font-medium shadow-sm transition disabled:cursor-not-allowed disabled:opacity-60 sm:col-span-2 lg:col-span-1 ${
+        className={`rounded-full border px-4 py-3 text-sm font-medium shadow-sm transition disabled:cursor-not-allowed disabled:opacity-60 sm:col-span-2 lg:col-span-1 ${
           favoritesOnly
-            ? "border-amber-400 bg-amber-50 text-amber-700"
-            : "border-slate-200 bg-white text-slate-600 hover:border-amber-400 hover:text-amber-700"
+            ? "border-brand-300 bg-brand-50 text-brand-700"
+            : "border-brand-200 bg-white text-slate-600 hover:border-brand-300 hover:text-brand-700"
         }`}
       >
-        {favoritesOnly ? "★" : "☆"} Favourites only
+        {favoritesOnly ? "♥" : "♡"} Favourites only
       </button>
     </div>
   );

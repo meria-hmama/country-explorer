@@ -14,7 +14,7 @@ export default function StatusBar({ initialCount = null }) {
   const isLoading = initialCount === null && (status === "idle" || status === "loading");
 
   return (
-    <div className="flex flex-wrap items-center justify-between gap-3 text-sm text-slate-500">
+    <div className="flex flex-wrap items-center justify-between gap-3 text-sm text-slate-600">
       <p aria-live="polite" className="flex items-center gap-2">
         {isLoading && (
           <>
@@ -38,7 +38,7 @@ export default function StatusBar({ initialCount = null }) {
           type="button"
           onClick={() => loadCountries()}
           disabled={isLoading}
-          className="inline-flex items-center gap-2 rounded-lg border border-slate-200 bg-white px-3 py-1.5 font-medium text-slate-600 transition hover:border-brand-500 hover:text-brand-600 disabled:opacity-50"
+          className="inline-flex items-center gap-2 rounded-lg border border-brand-100 bg-white px-3 py-1.5 font-medium text-slate-600 transition hover:border-brand-500 hover:text-brand-600 disabled:opacity-50"
         >
           {isLoading ? <Spinner /> : <span aria-hidden="true">↻</span>} Refresh
         </button>

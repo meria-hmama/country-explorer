@@ -9,7 +9,7 @@ export default function ErrorState() {
   return (
     <div
       role="alert"
-      className="mx-auto max-w-lg rounded-2xl border border-red-200 bg-red-50 p-8 text-center"
+      className="mx-auto max-w-lg rounded-3xl border border-red-200 bg-red-50 p-8 text-center"
     >
       <div aria-hidden="true" className="text-4xl">
         😕

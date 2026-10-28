@@ -26,8 +26,8 @@ export default function TripSuccess({ trip, onPlanAnother }) {
   const style = TRAVEL_STYLES.find((s) => s.value === trip.style)?.label;
 
   return (
-    <div className="overflow-hidden rounded-2xl border border-emerald-200 bg-white shadow-sm">
-      <div className="relative h-48 bg-slate-100 sm:h-60">
+    <div className="overflow-hidden rounded-3xl border border-emerald-200 bg-white shadow-sm">
+      <div className="relative h-48 bg-brand-50 sm:h-60">
         {photoUrl && (
           /* eslint-disable-next-line @next/next/no-img-element */
           <img src={photoUrl} alt={`Your photo for the trip to ${trip.countryName}`} className="h-full w-full object-cover" />
@@ -47,24 +47,24 @@ export default function TripSuccess({ trip, onPlanAnother }) {
 
         <dl className="grid gap-4 text-sm sm:grid-cols-2">
           <div>
-            <dt className="text-xs uppercase tracking-wide text-slate-500">Dates</dt>
+            <dt className="text-xs uppercase tracking-wide text-slate-600">Dates</dt>
             <dd className="font-medium text-slate-700">
               {formatDate(trip.startDate)} → {formatDate(trip.endDate)} ({nights} night{nights === 1 ? "" : "s"})
             </dd>
           </div>
           <div>
-            <dt className="text-xs uppercase tracking-wide text-slate-500">Travellers</dt>
+            <dt className="text-xs uppercase tracking-wide text-slate-600">Travellers</dt>
             <dd className="font-medium text-slate-700">
               {trip.travellers} {Number(trip.travellers) === 1 ? "person" : "people"} · {style}
             </dd>
           </div>
           <div>
-            <dt className="text-xs uppercase tracking-wide text-slate-500">Summary sent to</dt>
+            <dt className="text-xs uppercase tracking-wide text-slate-600">Summary sent to</dt>
             <dd className="truncate font-medium text-slate-700">{trip.email.trim()}</dd>
           </div>
           {trip.notes.trim() && (
             <div className="sm:col-span-2">
-              <dt className="text-xs uppercase tracking-wide text-slate-500">Notes</dt>
+              <dt className="text-xs uppercase tracking-wide text-slate-600">Notes</dt>
               <dd className="whitespace-pre-line text-slate-700">{trip.notes.trim()}</dd>
             </div>
           )}
@@ -74,13 +74,13 @@ export default function TripSuccess({ trip, onPlanAnother }) {
           <button
             type="button"
             onClick={onPlanAnother}
-            className="rounded-xl bg-brand-500 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-brand-600"
+            className="rounded-full bg-gradient-to-r from-brand-500 to-lilac-500 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:from-brand-600 hover:to-lilac-600"
           >
             Plan another trip
           </button>
           <Link
             href="/"
-            className="rounded-xl border border-slate-200 px-5 py-2.5 text-center text-sm font-semibold text-slate-700 transition hover:border-brand-500 hover:text-brand-600"
+            className="rounded-full border border-brand-200 px-5 py-2.5 text-center text-sm font-semibold text-slate-700 transition hover:border-brand-500 hover:text-brand-600"
           >
             Back to the explorer
           </Link>

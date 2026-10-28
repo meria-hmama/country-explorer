@@ -93,7 +93,7 @@ export default function CountryExplorer({ initialCountries }) {
               <button
                 type="button"
                 onClick={() => setLimit((l) => l + PAGE_SIZE)}
-                className="rounded-xl border border-slate-200 bg-white px-5 py-2.5 text-sm font-semibold text-slate-700 shadow-sm transition hover:border-brand-500 hover:text-brand-600"
+                className="rounded-xl border border-brand-100 bg-white px-5 py-2.5 text-sm font-semibold text-slate-700 shadow-sm transition hover:border-brand-500 hover:text-brand-600"
               >
                 Show more countries ({cards.length - limit} left)
               </button>

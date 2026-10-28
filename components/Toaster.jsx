@@ -5,7 +5,7 @@ import { useToastStore } from "@/store/useToastStore";
 const styles = {
   success: { box: "border-emerald-200 bg-emerald-50", title: "text-emerald-800", text: "text-emerald-700", icon: "✅" },
   error: { box: "border-red-200 bg-red-50", title: "text-red-800", text: "text-red-700", icon: "⛔" },
-  info: { box: "border-slate-200 bg-white", title: "text-slate-800", text: "text-slate-600", icon: "ℹ️" },
+  info: { box: "border-brand-100 bg-white", title: "text-slate-800", text: "text-slate-600", icon: "ℹ️" },
 };
 
 export default function Toaster() {
@@ -24,7 +24,7 @@ export default function Toaster() {
           <div
             key={t.id}
             role={t.type === "error" ? "alert" : "status"}
-            className={`toast-in pointer-events-auto flex w-full max-w-sm items-start gap-3 rounded-2xl border p-4 shadow-lg ${s.box}`}
+            className={`toast-in pointer-events-auto flex w-full max-w-sm items-start gap-3 rounded-3xl border p-4 shadow-lg ${s.box}`}
           >
             <span aria-hidden="true" className="text-lg leading-none">
               {s.icon}
@@ -37,7 +37,7 @@ export default function Toaster() {
               type="button"
               onClick={() => dismiss(t.id)}
               aria-label="Close notification"
-              className="-m-1 rounded-lg p-1 text-slate-500 transition hover:bg-black/5 hover:text-slate-700"
+              className="-m-1 rounded-lg p-1 text-slate-600 transition hover:bg-black/5 hover:text-slate-700"
             >
               ✕
             </button>

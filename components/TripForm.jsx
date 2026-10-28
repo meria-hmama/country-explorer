@@ -117,7 +117,7 @@ export default function TripForm({ initialCountry = "" }) {
     <form onSubmit={handleSubmit} noValidate className="space-y-6" aria-busy={submitting}>
       {/* banner after a failed submit: either validation or the server */}
       {triedToSubmit && errorCount > 0 && (
-        <div role="alert" className="rounded-2xl border border-red-200 bg-red-50 p-4 text-sm text-red-700">
+        <div role="alert" className="rounded-3xl border border-red-200 bg-red-50 p-4 text-sm text-red-700">
           <p className="font-semibold text-red-800">
             {errorCount === 1 ? "1 field needs your attention" : `${errorCount} fields need your attention`}
           </p>
@@ -125,7 +125,7 @@ export default function TripForm({ initialCountry = "" }) {
         </div>
       )}
       {serverError && errorCount === 0 && (
-        <div role="alert" className="rounded-2xl border border-red-200 bg-red-50 p-4 text-sm text-red-700">
+        <div role="alert" className="rounded-3xl border border-red-200 bg-red-50 p-4 text-sm text-red-700">
           <p className="font-semibold text-red-800">Sending failed</p>
           <p className="mt-1">{serverError}</p>
         </div>
@@ -133,7 +133,7 @@ export default function TripForm({ initialCountry = "" }) {
 
       {/* disabling the fieldset disables every input inside while we wait */}
       <fieldset disabled={submitting} className="space-y-6">
-        <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+        <section className="rounded-3xl border border-brand-100 bg-white p-5 shadow-sm sm:p-6">
           <h2 className="text-base font-semibold text-slate-900">About you</h2>
           <div className="mt-4 grid gap-5 sm:grid-cols-2">
             <Field id={fieldId("fullName")} label="Full name" error={errorFor("fullName")}>
@@ -156,7 +156,7 @@ export default function TripForm({ initialCountry = "" }) {
           </div>
         </section>
 
-        <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+        <section className="rounded-3xl border border-brand-100 bg-white p-5 shadow-sm sm:p-6">
           <h2 className="text-base font-semibold text-slate-900">The trip</h2>
           <div className="mt-4 grid gap-5 sm:grid-cols-2">
             <Field
@@ -217,7 +217,7 @@ export default function TripForm({ initialCountry = "" }) {
                         ? "border-brand-500 bg-brand-50 text-brand-700"
                         : errorFor("style")
                         ? "border-red-400 bg-white text-slate-600"
-                        : "border-slate-200 bg-white text-slate-600 hover:border-brand-500"
+                        : "border-brand-100 bg-white text-slate-600 hover:border-brand-500"
                     }`}
                   >
                     <input
@@ -239,7 +239,7 @@ export default function TripForm({ initialCountry = "" }) {
                   {errorFor("style")}
                 </p>
               ) : (
-                <p className="mt-1.5 text-xs text-slate-500">
+                <p className="mt-1.5 text-xs text-slate-600">
                   {TRAVEL_STYLES.find((s) => s.value === values.style)?.hint ?? "Pick the one that fits you best."}
                 </p>
               )}
@@ -247,7 +247,7 @@ export default function TripForm({ initialCountry = "" }) {
           </div>
         </section>
 
-        <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+        <section className="rounded-3xl border border-brand-100 bg-white p-5 shadow-sm sm:p-6">
           <h2 className="text-base font-semibold text-slate-900">Extras</h2>
           <div className="mt-4 space-y-5">
             <Field id={fieldId("photo")} label="Trip photo" error={errorFor("photo")}>
@@ -273,7 +273,7 @@ export default function TripForm({ initialCountry = "" }) {
               />
               <p
                 className={`mt-1 text-right text-xs ${
-                  values.notes.length > MAX_NOTES ? "font-semibold text-red-600" : "text-slate-500"
+                  values.notes.length > MAX_NOTES ? "font-semibold text-red-600" : "text-slate-600"
                 }`}
               >
                 {values.notes.length}/{MAX_NOTES}
@@ -312,7 +312,7 @@ export default function TripForm({ initialCountry = "" }) {
 
       <div className="flex flex-col-reverse gap-4 sm:flex-row sm:items-center sm:justify-between">
         {/* testing helper, same idea as "Simulate API failure" on the home page */}
-        <label className="inline-flex items-center gap-2 text-sm text-slate-500">
+        <label className="inline-flex items-center gap-2 text-sm text-slate-600">
           <input
             type="checkbox"
             checked={simulateError}
@@ -326,7 +326,7 @@ export default function TripForm({ initialCountry = "" }) {
         <button
           type="submit"
           disabled={submitting}
-          className="inline-flex items-center justify-center gap-2 rounded-xl bg-brand-500 px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-brand-600 focus:outline-none focus:ring-4 focus:ring-brand-100 disabled:cursor-not-allowed disabled:opacity-70"
+          className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-brand-500 to-lilac-500 px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:from-brand-600 hover:to-lilac-600 focus:outline-none focus:ring-4 focus:ring-brand-100 disabled:cursor-not-allowed disabled:opacity-70"
         >
           {submitting ? (
             <>

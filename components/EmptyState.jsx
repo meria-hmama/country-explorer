@@ -4,19 +4,19 @@ import { useExplorerStore } from "@/store/useExplorerStore";
 
 function Shell({ icon, title, children, action }) {
   return (
-    <div className="mx-auto max-w-lg rounded-2xl border border-dashed border-slate-300 bg-white p-8 text-center">
+    <div className="mx-auto max-w-lg rounded-3xl border border-dashed border-brand-200 bg-white p-8 text-center">
       <div aria-hidden="true" className="text-4xl">
         {icon}
       </div>
       <h2 className="mt-3 text-lg font-semibold text-slate-800">{title}</h2>
-      <p className="mt-2 text-sm text-slate-500">{children}</p>
+      <p className="mt-2 text-sm text-slate-600">{children}</p>
       {action}
     </div>
   );
 }
 
 const buttonClass =
-  "mt-6 rounded-xl border border-slate-200 px-5 py-2.5 text-sm font-semibold text-slate-700 transition hover:border-brand-500 hover:text-brand-600";
+  "mt-6 rounded-xl border border-brand-100 px-5 py-2.5 text-sm font-semibold text-slate-700 transition hover:border-brand-500 hover:text-brand-600";
 
 export default function EmptyState() {
   const total = useExplorerStore((s) => s.countries.length);
@@ -47,7 +47,7 @@ export default function EmptyState() {
   if (favoritesOnly && favCount === 0) {
     return (
       <Shell
-        icon="⭐"
+        icon="💖"
         title="No favourites yet"
         action={
           <button type="button" onClick={() => setFavoritesOnly(false)} className={buttonClass}>
@@ -55,7 +55,7 @@ export default function EmptyState() {
           </button>
         }
       >
-        Tap the ☆ on any country card to save it here. Your favourites are kept on this device.
+        Tap the ♡ on any country card to save it here. Your favourites are kept on this device.
       </Shell>
     );
   }

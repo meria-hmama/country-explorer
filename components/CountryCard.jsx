@@ -19,18 +19,18 @@ export default function CountryCard({ country, priority = false }) {
   }, []);
 
   return (
-    <article className="group relative overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md">
-      <div className="relative aspect-[3/2] overflow-hidden bg-slate-100">
+    <article className="group relative overflow-hidden rounded-3xl border border-brand-100 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-lg hover:shadow-brand-100">
+      <div className="relative aspect-[3/2] overflow-hidden bg-brand-50">
         {/* shimmer sits behind the flag, the flag simply covers it once it has loaded.
             (in week 3 the image was hidden with opacity until onLoad fired. lighthouse
             didn't like that: the biggest image on the page stayed invisible for an extra
             second, and with server rendering onLoad can even fire before react is ready).
             the first row of flags loads right away, the other ~246 only when you scroll. */}
         {!flagFailed && (
-          <div aria-hidden="true" className="absolute inset-0 animate-pulse bg-slate-200" />
+          <div aria-hidden="true" className="absolute inset-0 animate-pulse bg-brand-100" />
         )}
         {flagFailed ? (
-          <div className="grid h-full place-items-center text-xs text-slate-500">
+          <div className="grid h-full place-items-center text-xs text-slate-600">
             Flag unavailable
           </div>
         ) : (
@@ -56,10 +56,13 @@ export default function CountryCard({ country, priority = false }) {
         aria-pressed={isFavorite}
         aria-label={isFavorite ? `Remove ${country.name} from favourites` : `Add ${country.name} to favourites`}
         className={`absolute right-3 top-3 grid h-9 w-9 place-items-center rounded-full border bg-white/90 text-lg shadow-sm backdrop-blur transition hover:scale-110 ${
-          isFavorite ? "border-amber-300 text-amber-500" : "border-slate-200 text-slate-500"
+          isFavorite ? "border-brand-200 text-brand-500" : "border-brand-100 text-slate-600 hover:text-brand-500"
         }`}
       >
-        {isFavorite ? "★" : "☆"}
+        {/* key changes when you click, so the little pop animation replays */}
+        <span key={String(isFavorite)} aria-hidden="true" className={isFavorite ? "heart-pop" : ""}>
+          {isFavorite ? "♥" : "♡"}
+        </span>
       </button>
 
       <div className="space-y-3 p-4">
@@ -67,25 +70,25 @@ export default function CountryCard({ country, priority = false }) {
           <h2 className="truncate text-base font-semibold text-slate-900" title={country.name}>
             {country.name}
           </h2>
-          <p className="truncate text-xs text-slate-500" title={country.nativeName}>
+          <p className="truncate text-xs text-slate-600" title={country.nativeName}>
             {country.nativeName || " "}
           </p>
         </div>
         <dl className="grid grid-cols-2 gap-x-3 gap-y-2 text-sm">
           <div>
-            <dt className="text-xs uppercase tracking-wide text-slate-500">Capital</dt>
+            <dt className="text-xs uppercase tracking-wide text-slate-600">Capital</dt>
             <dd className="truncate font-medium text-slate-700" title={country.capital}>
               {country.capital}
             </dd>
           </div>
           <div>
-            <dt className="text-xs uppercase tracking-wide text-slate-500">Currency</dt>
+            <dt className="text-xs uppercase tracking-wide text-slate-600">Currency</dt>
             <dd className="truncate font-medium text-slate-700" title={country.currency}>
               {country.currency}
             </dd>
           </div>
           <div className="col-span-2">
-            <dt className="text-xs uppercase tracking-wide text-slate-500">Languages</dt>
+            <dt className="text-xs uppercase tracking-wide text-slate-600">Languages</dt>
             <dd className="truncate font-medium text-slate-700" title={languages}>
               {languages}
             </dd>
