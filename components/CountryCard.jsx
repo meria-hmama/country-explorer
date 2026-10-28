@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { useExplorerStore } from "@/store/useExplorerStore";
 
 export default function CountryCard({ country }) {
@@ -76,9 +77,18 @@ export default function CountryCard({ country }) {
             </dd>
           </div>
         </dl>
-        <span className="inline-block rounded-full bg-brand-50 px-2.5 py-1 text-xs font-medium text-brand-700">
-          {country.continent}
-        </span>
+        <div className="flex items-center justify-between gap-2">
+          <span className="inline-block rounded-full bg-brand-50 px-2.5 py-1 text-xs font-medium text-brand-700">
+            {country.continent}
+          </span>
+          <Link
+            href={`/plan?country=${country.id}`}
+            aria-label={`Plan a trip to ${country.name}`}
+            className="text-xs font-semibold text-brand-600 hover:underline"
+          >
+            Plan a trip →
+          </Link>
+        </div>
       </div>
     </article>
   );
