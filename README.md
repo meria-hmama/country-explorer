@@ -1,22 +1,34 @@
 # Country Explorer
 
-A small app I built for my frontend internship at Zenvio Solutions. In week 2 the goal was to work with a real public API, so I made something that loads every country in the world and lets you search and filter through them. In week 3 I moved its state into a global Zustand store and added favourites, in week 4 I added a "Plan a trip" page with a proper form, and in week 5 I went through a Lighthouse audit and made it faster (all explained below).
+A small app I built during my frontend internship at Zenvio Solutions. I started it in week 2 and kept building on the same project every week after that, so this README is kind of a diary of how it grew.
 
-Live version: **https://country-explorer-wheat-phi.vercel.app**
+**Live version:** https://country-explorer-wheat-phi.vercel.app
+
+| Week | Task | What I added |
+| --- | --- | --- |
+| 1 | Responsive landing page | a separate project, [Hasad](https://github.com/meria-hmama/hasad) |
+| 2 | Consume a public API | the country list with search, filter, sort, and loading / error / empty states |
+| 3 | Global state | a Zustand store, favourites, skeletons and better empty states |
+| 4 | Forms and validation | the "Plan a trip" page with a 10-field form, validation and toasts |
+| 5 | Performance and deployment | server rendering, faster loading, SEO, environment variables, and a pink redesign 🌸 |
+
+Each week has its own section below. Earlier sections describe the app as it was that week, and where something changed later I added a small note.
 
 ## What it does
 
-- Loads all 250 countries and shows them as cards with the flag, native name, capital, currency, languages and continent
+This is how the app works today:
+
+- It loads all 250 countries and shows them as cards with the flag, native name, capital, currency, languages and continent. The first 24 come with the page and the rest load as you scroll
 - You can search by country name, native name or capital, filter by continent, and sort the list
 - While the data is loading you see placeholder cards instead of a blank page
 - If the request fails you get a short explanation and a "Try again" button
 - If your search doesn't match anything, it tells you and lets you clear the filters
-- You can star countries as favourites; they stay saved when you come back
-- You can plan a trip to any country with a form that checks everything as you type
+- You can heart countries as favourites (♡), and they stay saved when you come back
+- On the "Plan a trip" page you can plan a trip to any country, with a form that checks everything as you type
 
 There's also a "Simulate API failure" button above the grid. It calls an endpoint that doesn't exist, which was the easiest way I found to show the error screen without unplugging my internet. (Switching the Network tab in DevTools to "Offline" and hitting Refresh works too.)
 
-## The API
+## Week 2: the API
 
 Data comes from the [Countries GraphQL API](https://github.com/trevorblades/countries) by Trevor Blades. It's free and doesn't need a key. Flag images come from [flagcdn.com](https://flagcdn.com).
 
@@ -40,14 +52,14 @@ What I changed:
 
 1. Fetching. I deleted my old `useCountries` hook. Loading the data is now a store action, so Refresh, "Try again" on the error screen and "Simulate API failure" all go through the same `loadCountries()`. If you spam Refresh it cancels the previous request.
 2. Search/filter/sort. `Toolbar` and `EmptyState` don't get any props anymore, they read the filters from the store. The filtered list is worked out in `hooks/useVisibleCountries.js`.
-3. New: favourites. There's a star on every card, a counter in the header, and a button to only show your favourites. The card and the header are in completely different places in the tree, which is exactly the case where prop drilling gets annoying, and with the store they just stay in sync. Favourites (and your sort choice) are saved in localStorage so they're still there when you come back.
+3. New: favourites. There's a star on every card (it became a heart in the week 5 redesign), a counter in the header, and a button to only show your favourites. The card and the header are in completely different places in the tree, which is exactly the case where prop drilling gets annoying, and with the store they just stay in sync. Favourites (and your sort choice) are saved in localStorage so they're still there when you come back.
 
 One thing that tripped me up: Next.js renders the page on the server first, where there's no localStorage, so loading favourites straight away caused a hydration mismatch (server says 0 favourites, browser says 3). I fixed it by telling the store to skip hydration and loading the saved data in a `useEffect` after the first render (`StoreHydration.jsx`).
 
 I also went through the loading and empty states again:
 
 - skeleton cards while the data loads, plus a little spinner in the status line and on the Refresh button
-- each flag has a grey shimmer until the image actually loads, and says "Flag unavailable" if it fails
+- each flag has a grey shimmer until the image actually loads, and says "Flag unavailable" if it fails (in week 5 I changed how the shimmer works, see below)
 - three different empty messages depending on why there's nothing to show: your search matched nothing, you turned on favourites but haven't starred anything, or the API came back with an empty list
 
 ## Week 4: forms and validation
@@ -137,7 +149,7 @@ Screenshots: [before](docs/lighthouse/before-mobile.png) and [after](docs/lighth
 2. **The first flags were lazy-loaded and hidden.** Every flag had `loading="lazy"` and stayed at `opacity: 0` until its `onLoad` fired. Now the first row of 4 loads straight away with `fetchpriority="high"`, and the flags aren't hidden anymore. The grey shimmer just sits behind the image, so the flag covers it as soon as it arrives. I also added `width` and `height` so the browser knows the size in advance.
 3. **Too much HTML.** Once the cards were rendered on the server, the HTML was 540 KB because of all 250 cards. Now it shows 24 at a time and loads more when you scroll near the bottom (`IntersectionObserver`, plus a "Show more" button as a fallback). That brought the HTML down to about 110 KB and Total Blocking Time from 100 ms to 20 ms.
 4. **Preconnect.** Lighthouse suggested connecting to `countries.trevorblades.com` early (about 300 ms saved), so `layout.jsx` now has `<link rel="preconnect">` for the API and for flagcdn.com.
-5. **Low contrast text (accessibility).** The light grey I used for small labels (`slate-400`) and for the inactive nav link was too light on white. I changed it to `slate-500` / `slate-600` everywhere, and accessibility went from 97 to 100.
+5. **Low contrast text (accessibility).** The light grey I used for small labels (`slate-400`) and for the inactive nav link was too light on white. I changed it to `slate-500` (and later `slate-600`, after the pink background went in), and accessibility went from 97 to 100.
 
 Things it still mentions that I left alone: about 12 KB of "legacy JavaScript" (polyfills that Next.js 14 ships itself, like `Array.prototype.at`) and the 6 KB CSS file counting as render-blocking. Fixing those means upgrading Next.js or changing build settings, and that felt too risky for this week.
 
@@ -148,6 +160,9 @@ While I was at it I gave the app a softer, pinker look. Honestly the blue felt a
 - the `brand` colours in `tailwind.config.js` are now pink, with a lilac accent for gradients. I picked the darker pinks (`#db2777` and up) for anything with text, so it still passes the contrast check
 - a soft pink/lilac background, rounded "pill" buttons and inputs, rounder cards, and a pink focus outline
 - the font is now Quicksand (rounder than Inter)
+- the small grey text went from `slate-500` to `slate-600`, so it stays readable on the pink background
+
+I ran Lighthouse again after the redesign and accessibility was still 100.
 - favourites are hearts now (♡ / ♥) with a tiny pop when you click, which is turned off if you have "reduce motion" on
 - the header sticks to the top with a blurred background, plus a new gradient favicon
 
@@ -186,7 +201,7 @@ lib/              the countries API call, the fake trip API, the form validation
 docs/lighthouse/  before / after screenshots from week 5
 ```
 
-I tried to keep the fetching logic out of the components. `lib/countriesApi.js` does the request, turns errors into readable messages and cleans up the data. The store keeps track of whether we're loading, done, or failed. The components just render whatever is in the store, which made the loading/error/empty screens a lot easier to reason about.
+I tried to keep the fetching logic out of the components. `lib/countriesApi.js` does the request, turns errors into readable messages and cleans up the data. The store keeps track of whether we're loading, done, or failed. The components just render whatever is in the store, which made the loading/error/empty screens a lot easier to reason about. (Since week 5 there's one exception: before the store is filled, `CountryExplorer` shows the list the server sent with the page.)
 
 A couple of other small things:
 
@@ -220,4 +235,4 @@ It's deployed on Vercel, connected to this GitHub repo, so every push to `main` 
 
 ## Built with
 
-Next.js 14, React 18, Zustand and Tailwind CSS. Deployed on Vercel.
+Next.js 14 (App Router), React 18, Zustand and Tailwind CSS. Deployed on Vercel. Data from the [Countries GraphQL API](https://github.com/trevorblades/countries), flags from [flagcdn.com](https://flagcdn.com).
