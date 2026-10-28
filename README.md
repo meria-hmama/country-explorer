@@ -141,6 +141,16 @@ Screenshots: [before](docs/lighthouse/before-mobile.png) and [after](docs/lighth
 
 Things it still mentions that I left alone: about 12 KB of "legacy JavaScript" (polyfills that Next.js 14 ships itself, like `Array.prototype.at`) and the 6 KB CSS file counting as render-blocking. Fixing those means upgrading Next.js or changing build settings, and that felt too risky for this week.
 
+### A little redesign 🌸
+
+While I was at it I gave the app a softer, pinker look. Honestly the blue felt a bit too "default Tailwind", and I wanted it to feel more like me:
+
+- the `brand` colours in `tailwind.config.js` are now pink, with a lilac accent for gradients. I picked the darker pinks (`#db2777` and up) for anything with text, so it still passes the contrast check
+- a soft pink/lilac background, rounded "pill" buttons and inputs, rounder cards, and a pink focus outline
+- the font is now Quicksand (rounder than Inter)
+- favourites are hearts now (♡ / ♥) with a tiny pop when you click, which is turned off if you have "reduce motion" on
+- the header sticks to the top with a blurred background, plus a new gradient favicon
+
 ### SEO
 
 - every page has its own `<title>` and meta description (the plan page is "Plan a trip · Country Explorer")
