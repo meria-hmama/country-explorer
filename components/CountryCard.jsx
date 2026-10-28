@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useExplorerStore } from "@/store/useExplorerStore";
 
@@ -9,6 +9,14 @@ export default function CountryCard({ country, priority = false }) {
   const isFavorite = useExplorerStore((s) => s.favorites.includes(country.id));
   const toggleFavorite = useExplorerStore((s) => s.toggleFavorite);
   const [flagFailed, setFlagFailed] = useState(false);
+  const imgRef = useRef(null);
+
+  // the server-rendered <img> can fail before react is listening for onError,
+  // so check once after mounting too
+  useEffect(() => {
+    const img = imgRef.current;
+    if (img?.complete && img.naturalWidth === 0) setFlagFailed(true);
+  }, []);
 
   return (
     <article className="group relative overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md">
@@ -28,6 +36,7 @@ export default function CountryCard({ country, priority = false }) {
         ) : (
           /* eslint-disable-next-line @next/next/no-img-element */
           <img
+            ref={imgRef}
             src={country.flag}
             alt={`Flag of ${country.name}`}
             width={320}
