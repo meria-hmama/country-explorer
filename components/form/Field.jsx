@@ -13,7 +13,7 @@ export default function Field({ id, label, optional, hint, error, children, clas
     <div className={className}>
       <label htmlFor={id} className="mb-1.5 flex items-baseline justify-between text-sm font-medium text-slate-700">
         <span>{label}</span>
-        {optional && <span className="text-xs font-normal text-slate-400">optional</span>}
+        {optional && <span className="text-xs font-normal text-slate-500">optional</span>}
       </label>
       {children}
       {error ? (

@@ -50,7 +50,7 @@ export default function PhotoInput({ id, file, error, disabled, onChange, onBlur
         {file ? (
           <p className="truncate font-medium text-slate-700" title={file.name}>
             {file.name}{" "}
-            <span className="font-normal text-slate-400">({(file.size / 1024).toFixed(0)} KB)</span>
+            <span className="font-normal text-slate-500">({(file.size / 1024).toFixed(0)} KB)</span>
           </p>
         ) : (
           <p className="text-slate-500">JPG, PNG or WebP, up to {MAX_PHOTO_MB} MB.</p>
