@@ -1,11 +1,12 @@
-import { Inter } from "next/font/google";
+import { Quicksand } from "next/font/google";
 import Header from "@/components/Header";
 import StoreHydration from "@/components/StoreHydration";
 import Toaster from "@/components/Toaster";
 import { SITE_URL } from "@/lib/site";
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
+// rounder, softer font for the pink redesign
+const quicksand = Quicksand({ subsets: ["latin"], variable: "--font-quicksand", display: "swap" });
 
 
 const description =
@@ -32,12 +33,12 @@ export const metadata = {
 };
 
 export const viewport = {
-  themeColor: "#2f6fed",
+  themeColor: "#db2777",
 };
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={inter.variable}>
+    <html lang="en" className={quicksand.variable}>
       <head>
         {/* lighthouse said connecting to these two early saves ~300 ms */}
         <link rel="preconnect" href="https://countries.trevorblades.com" crossOrigin="anonymous" />
@@ -48,8 +49,8 @@ export default function RootLayout({ children }) {
         <StoreHydration />
         <Header />
         <div className="flex-1">{children}</div>
-        <footer className="border-t border-slate-200 py-6 text-center text-xs text-slate-500">
-          Built with Next.js &amp; Tailwind CSS · Data from{" "}
+        <footer className="border-t border-brand-100 bg-white/60 py-6 text-center text-xs text-slate-600">
+          Made with 💕 by Meria · Next.js &amp; Tailwind CSS · Data from{" "}
           <a href="https://github.com/trevorblades/countries" className="underline hover:text-brand-600">
             Countries GraphQL API
           </a>
