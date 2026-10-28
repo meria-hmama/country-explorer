@@ -32,7 +32,7 @@ export default function CountryExplorer({ initialCountries }) {
   const sentinelRef = useRef(null);
 
   // new search / filter / sort -> start from the top again
-  // (not when you star a country, otherwise the list would jump back up)
+  // (not when you heart a country, otherwise the list would jump back up)
   const query = useExplorerStore((s) => s.query);
   const region = useExplorerStore((s) => s.region);
   const sort = useExplorerStore((s) => s.sort);
