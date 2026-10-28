@@ -32,10 +32,10 @@ export default function PhotoInput({ id, file, error, disabled, onChange, onBlur
   return (
     <div
       className={`flex flex-col gap-4 rounded-xl border border-dashed p-4 sm:flex-row sm:items-center ${
-        error ? "border-red-400 bg-red-50/40" : "border-slate-300 bg-white"
+        error ? "border-red-400 bg-red-50/40" : "border-brand-200 bg-white"
       }`}
     >
-      <div className="grid h-24 w-full shrink-0 place-items-center overflow-hidden rounded-lg bg-slate-100 sm:w-32">
+      <div className="grid h-24 w-full shrink-0 place-items-center overflow-hidden rounded-lg bg-brand-50 sm:w-32">
         {preview ? (
           /* eslint-disable-next-line @next/next/no-img-element */
           <img src={preview} alt="Preview of the photo you picked" className="h-full w-full object-cover" />
@@ -50,15 +50,15 @@ export default function PhotoInput({ id, file, error, disabled, onChange, onBlur
         {file ? (
           <p className="truncate font-medium text-slate-700" title={file.name}>
             {file.name}{" "}
-            <span className="font-normal text-slate-500">({(file.size / 1024).toFixed(0)} KB)</span>
+            <span className="font-normal text-slate-600">({(file.size / 1024).toFixed(0)} KB)</span>
           </p>
         ) : (
-          <p className="text-slate-500">JPG, PNG or WebP, up to {MAX_PHOTO_MB} MB.</p>
+          <p className="text-slate-600">JPG, PNG or WebP, up to {MAX_PHOTO_MB} MB.</p>
         )}
 
         <div className="flex flex-wrap gap-2">
           <label
-            className={`inline-flex cursor-pointer items-center rounded-lg border border-slate-200 bg-white px-3 py-1.5 font-medium text-slate-700 transition focus-within:ring-4 focus-within:ring-brand-100 hover:border-brand-500 hover:text-brand-600 ${
+            className={`inline-flex cursor-pointer items-center rounded-full border border-brand-200 bg-white px-3 py-1.5 font-medium text-slate-700 transition focus-within:ring-4 focus-within:ring-brand-100 hover:border-brand-500 hover:text-brand-600 ${
               disabled ? "pointer-events-none opacity-60" : ""
             }`}
           >
@@ -82,7 +82,7 @@ export default function PhotoInput({ id, file, error, disabled, onChange, onBlur
               type="button"
               onClick={clear}
               disabled={disabled}
-              className="rounded-lg px-3 py-1.5 font-medium text-slate-500 transition hover:bg-slate-100 hover:text-red-600 disabled:opacity-60"
+              className="rounded-lg px-3 py-1.5 font-medium text-slate-600 transition hover:bg-brand-50 hover:text-red-600 disabled:opacity-60"
             >
               Remove
             </button>
