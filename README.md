@@ -1,8 +1,8 @@
 # Country Explorer
 
-A small app I built for my frontend internship at Zenvio Solutions. In week 2 the goal was to work with a real public API, so I made something that loads every country in the world and lets you search and filter through them. In week 3 I moved its state into a global Zustand store and added favourites (see below).
+A small app I built for my frontend internship at Zenvio Solutions. In week 2 the goal was to work with a real public API, so I made something that loads every country in the world and lets you search and filter through them. In week 3 I moved its state into a global Zustand store and added favourites, and in week 4 I added a "Plan a trip" page with a proper form (both explained below).
 
-Live version: https://country-explorer-wheat-phi.vercel.app
+Live version: https://country-explorer-meria.vercel.app
 
 ## What it does
 
@@ -12,6 +12,7 @@ Live version: https://country-explorer-wheat-phi.vercel.app
 - If the request fails you get a short explanation and a "Try again" button
 - If your search doesn't match anything, it tells you and lets you clear the filters
 - You can star countries as favourites; they stay saved when you come back
+- You can plan a trip to any country with a form that checks everything as you type
 
 There's also a "Simulate API failure" button above the grid. It calls an endpoint that doesn't exist, which was the easiest way I found to show the error screen without unplugging my internet. (Switching the Network tab in DevTools to "Offline" and hitting Refresh works too.)
 
@@ -49,14 +50,77 @@ I also went through the loading and empty states again:
 - each flag has a grey shimmer until the image actually loads, and says "Flag unavailable" if it fails
 - three different empty messages depending on why there's nothing to show: your search matched nothing, you turned on favourites but haven't starred anything, or the API came back with an empty list
 
+## Week 4: forms and validation
+
+This week was about forms, so I added a second page, `/plan`, where you can plan a trip to a country. You can get there from the new nav in the header, or from the "Plan a trip →" link on any country card (that one fills in the country for you).
+
+The form has 10 fields:
+
+| Field | Type | What's checked |
+| --- | --- | --- |
+| Full name | text | required, 2 to 60 characters, only letters, spaces, `-` and `'` |
+| Email | email | required, has to look like an email |
+| Where to? | dropdown | required. The list comes from the same Zustand store as the home page, and your favourites are shown at the top |
+| Leaving on | date | required, can't be in the past |
+| Coming back on | date | required, after the departure date, and the trip can't be longer than 60 days |
+| Travellers | number | whole number between 1 and 10 |
+| Travel style | radio buttons | pick one |
+| Trip photo | file | required, JPG / PNG / WebP only, max 2 MB, with a preview |
+| Notes | textarea | optional, max 300 characters (with a counter) |
+| Checkbox | checkbox | has to be ticked |
+
+### How the validation works
+
+I didn't use a form library this time. I wanted to understand what they actually do for you first, so I wrote it by hand. All the rules are in `lib/tripValidation.js`, and each one returns either an error message or an empty string. The form component only decides *when* to show them:
+
+- nothing is red while you're still typing in a field for the first time. A field only shows its error after you leave it (on blur), or after you press "Save my trip"
+- once a field has been touched, its message updates live as you type, so it disappears as soon as you fix it
+- when you submit with mistakes, a banner at the top tells you how many fields need fixing, and the page jumps to the first one and puts the cursor in it
+
+I tried to make the messages specific, so not just "invalid field". For example the photo says "That image is 3.4 MB. The limit is 2 MB." and the return date tells you it has to be after you leave.
+
+Two things were trickier than I expected:
+
+1. **Dates and time zones.** The usual trick to get today's date, `new Date().toISOString()`, gives the date in UTC. Tunisia is UTC+1, so between midnight and 1am it would think "today" is still yesterday and let you pick a past date. So I build the `YYYY-MM-DD` string from the local date instead (`todayString()`).
+2. **The file input can't be controlled** like a normal input in React (you can't set its value). So I keep the `File` in state, show a preview with `URL.createObjectURL`, and clear the input by hand when you press "Remove". I also revoke the preview URL when the photo changes so it doesn't leak memory.
+
+The picker accepts any image on purpose (`accept="image/*"`), so you can actually choose a GIF and see the "only JPG, PNG or WebP" error.
+
+### Submitting
+
+There's no backend in this project, so `lib/tripApi.js` pretends to be one. It builds a real `FormData` object (so it would be easy to swap in a real `fetch` later), waits about 2 seconds, and returns a trip id.
+
+While it's "sending":
+
+- the submit button is disabled and shows a spinner with "Saving your trip…"
+- the whole form is inside a `<fieldset disabled>`, so you can't change anything halfway through
+- pressing Enter again doesn't send it twice
+
+After that you get a toast (bottom of the screen on phones, top right on desktop):
+
+- ✅ on success, plus a summary card of your trip with your photo
+- ⛔ if it fails, plus a red banner above the form. Your answers stay filled in so you can just try again
+
+To see the error case there's a "Make the server fail (for testing)" checkbox next to the button. It's the same idea as the "Simulate API failure" button on the home page.
+
+The toasts have their own little Zustand store (`store/useToastStore.js`), so any component can show one with `toast.success(...)` or `toast.error(...)` without passing anything around. They close by themselves after a few seconds, or with the ✕.
+
+### Other small changes
+
+- `Header`, `StoreHydration` and the footer moved into `app/layout.jsx`, since there are two pages now
+- the header got a nav (Explore / Plan a trip) and the favourites button only shows on the home page, where it does something
+- inputs have `aria-invalid` and `aria-describedby` pointing at their error message, so screen readers read the error too
+- after a successful submit, focus moves to the summary heading
+
 ## How it's organised
 
 ```
-app/           layout, page and global styles
-store/         the Zustand store (data, filters, favourites)
-components/    the UI pieces (header, toolbar, status bar, cards, loading / error / empty states)
-hooks/         useVisibleCountries (filtered + sorted list) and useDebounce (for the search box)
-lib/           the actual API call and error handling
+app/              layout, global styles, the home page and plan/page.jsx
+store/            the Zustand stores (countries + filters + favourites, and toasts)
+components/       the UI pieces (header, toolbar, cards, loading / error / empty states, trip form, toasts)
+components/form/  reusable form bits (Field, CountrySelect, PhotoInput)
+hooks/            useVisibleCountries (filtered + sorted list) and useDebounce (for the search box)
+lib/              the countries API call, the fake trip API and the form validation rules
 ```
 
 I tried to keep the fetching logic out of the components. `lib/countriesApi.js` does the request, turns errors into readable messages and cleans up the data. The store keeps track of whether we're loading, done, or failed. The components just render whatever is in the store, which made the loading/error/empty screens a lot easier to reason about.
