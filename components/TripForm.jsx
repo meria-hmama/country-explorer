@@ -273,7 +273,7 @@ export default function TripForm({ initialCountry = "" }) {
               />
               <p
                 className={`mt-1 text-right text-xs ${
-                  values.notes.length > MAX_NOTES ? "font-semibold text-red-600" : "text-slate-400"
+                  values.notes.length > MAX_NOTES ? "font-semibold text-red-600" : "text-slate-500"
                 }`}
               >
                 {values.notes.length}/{MAX_NOTES}

@@ -36,7 +36,7 @@ export default function Toolbar() {
         <span className="sr-only">Search countries</span>
         <span
           aria-hidden="true"
-          className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"
+          className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-slate-500"
         >
           🔍
         </span>

@@ -47,24 +47,24 @@ export default function TripSuccess({ trip, onPlanAnother }) {
 
         <dl className="grid gap-4 text-sm sm:grid-cols-2">
           <div>
-            <dt className="text-xs uppercase tracking-wide text-slate-400">Dates</dt>
+            <dt className="text-xs uppercase tracking-wide text-slate-500">Dates</dt>
             <dd className="font-medium text-slate-700">
               {formatDate(trip.startDate)} → {formatDate(trip.endDate)} ({nights} night{nights === 1 ? "" : "s"})
             </dd>
           </div>
           <div>
-            <dt className="text-xs uppercase tracking-wide text-slate-400">Travellers</dt>
+            <dt className="text-xs uppercase tracking-wide text-slate-500">Travellers</dt>
             <dd className="font-medium text-slate-700">
               {trip.travellers} {Number(trip.travellers) === 1 ? "person" : "people"} · {style}
             </dd>
           </div>
           <div>
-            <dt className="text-xs uppercase tracking-wide text-slate-400">Summary sent to</dt>
+            <dt className="text-xs uppercase tracking-wide text-slate-500">Summary sent to</dt>
             <dd className="truncate font-medium text-slate-700">{trip.email.trim()}</dd>
           </div>
           {trip.notes.trim() && (
             <div className="sm:col-span-2">
-              <dt className="text-xs uppercase tracking-wide text-slate-400">Notes</dt>
+              <dt className="text-xs uppercase tracking-wide text-slate-500">Notes</dt>
               <dd className="whitespace-pre-line text-slate-700">{trip.notes.trim()}</dd>
             </div>
           )}

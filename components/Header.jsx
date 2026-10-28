@@ -49,7 +49,7 @@ export default function Header() {
                   href={l.href}
                   aria-current={active ? "page" : undefined}
                   className={`rounded-lg px-3 py-1.5 transition ${
-                    active ? "bg-white text-slate-900 shadow-sm" : "text-slate-500 hover:text-slate-800"
+                    active ? "bg-white text-slate-900 shadow-sm" : "text-slate-600 hover:text-slate-900"
                   }`}
                 >
                   {l.label}

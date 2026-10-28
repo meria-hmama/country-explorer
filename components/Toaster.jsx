@@ -37,7 +37,7 @@ export default function Toaster() {
               type="button"
               onClick={() => dismiss(t.id)}
               aria-label="Close notification"
-              className="-m-1 rounded-lg p-1 text-slate-400 transition hover:bg-black/5 hover:text-slate-700"
+              className="-m-1 rounded-lg p-1 text-slate-500 transition hover:bg-black/5 hover:text-slate-700"
             >
               ✕
             </button>
