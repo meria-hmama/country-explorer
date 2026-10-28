@@ -1,8 +1,17 @@
 import TripForm from "@/components/TripForm";
 
 export const metadata = {
-  title: "Plan a trip · Country Explorer",
-  description: "Pick a country, choose your dates and save a trip plan.",
+  title: "Plan a trip",
+  description:
+    "Pick a country, choose your dates, how many people are going and your travel style, and save your trip plan.",
+  alternates: { canonical: "/plan" },
+  openGraph: {
+    type: "website",
+    url: "/plan",
+    siteName: "Country Explorer",
+    title: "Plan a trip · Country Explorer",
+    description: "Pick a country, choose your dates and travel style, and save your trip plan.",
+  },
 };
 
 // ?country=FR comes from the "Plan a trip" link on each country card
