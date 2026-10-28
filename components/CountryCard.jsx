@@ -43,7 +43,7 @@ export default function CountryCard({ country, priority = false }) {
             height={213}
             loading={priority ? "eager" : "lazy"}
             fetchPriority={priority ? "high" : undefined}
-            decoding="async"
+            decoding={priority ? "sync" : "async"}
             onError={() => setFlagFailed(true)}
             className="relative h-full w-full object-cover transition duration-300 group-hover:scale-105"
           />
